@@ -16,11 +16,12 @@ namespace XamarinSQLite.Android
     [Activity(Label = "XamarinSQLite.Android", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        
+        public static int  i = 7000 ;
+
 
         private string GetDbPath()
         {
-            string dbname = "UOTCSdatabase.db";
+            string dbname = "UOTCaiden.db";
             string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             return Path.Combine(documentsPath, dbname);
         }
