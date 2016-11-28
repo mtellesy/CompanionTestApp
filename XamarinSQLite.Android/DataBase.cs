@@ -47,7 +47,7 @@ namespace XamarinSQLite.Android
             todoEditText.Text = string.Empty;
             // test 
            
-            CScore.BCL.OtherUsers user = new CScore.BCL.OtherUsers();
+            CScore.BCL.Semester term = new CScore.BCL.Semester();
             user.use_nameEN = text;
            user.use_id = MainActivity.i;
             user.use_nameAR = "TELLESy";
