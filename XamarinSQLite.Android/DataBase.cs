@@ -29,12 +29,15 @@ namespace XamarinSQLite.Android
             var addButton = FindViewById<Button>(Resource.Id.AddButton);
             var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
             addButton.Click += OnAddButtonClicked;
-         
 
 
-            var results = await UsersD.getUsers();
+
+           CScore.BCL.Semester results = await SemesterD.getSemesterSchedule();
            
-            todoListView.Adapter = new ArrayAdapter<string>(this, global::Android.Resource.Layout.SimpleListItem1, results.ToList());
+            todoListView.Adapter = new ArrayAdapter<string>(this, global::Android.Resource.Layout.SimpleListItem1);
+            var adapter = todoListView.Adapter as ArrayAdapter<string>;
+            if(results != null)
+            adapter.Add(results.ter_nameEN);
         }
 
 
@@ -48,29 +51,17 @@ namespace XamarinSQLite.Android
             // test 
            
             CScore.BCL.Semester term = new CScore.BCL.Semester();
-            user.use_nameEN = text;
-           user.use_id = MainActivity.i;
-            user.use_nameAR = "TELLESy";
-            user.use_phone = 2222;
-            user.use_picture = "Tt";
-            user.use_typeID = 44;
-            user.use_gender = "d";
-            user.use_email = "raiden"; 
-            user.use_avatar = "raiden";
-            user.dep_id = 44;
-            user.dep_nameAR = "raiden"; 
-            user.dep_nameEN = "raiden";
-            user.academicRankAR = "raiden"; 
-            user.academicRankEN = "raiden";
-            user.academicRankID = 3;
+            term.ter_id = MainActivity.i++;
+            term.ter_nameEN = text;
 
-            await UsersD.saveOtherUser(user);
-     
-         CScore.BCL.OtherUsers user2 = await UsersD.getOtherUser(MainActivity.i++);
-         
 
-            if (user2 != null)
-                text = user2.use_nameEN;// + "newDB";
+            await SemesterD.saveSemesterSchedule(term);
+
+            CScore.BCL.Semester results = await SemesterD.getSemesterSchedule();
+
+
+            if (results != null)
+                text = results.ter_nameEN;
             else
                 text = "it was null man";
           //  if (user2 == null)
