@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using Android.App;
 using Android.Widget;
 using Android.OS;
@@ -32,12 +33,16 @@ namespace XamarinSQLite.Android
 
 
 
-           CScore.BCL.Semester results = await SemesterD.getSemesterSchedule();
+            List<CScore.BCL.Messages> results = await CScore.DAL.MessageD.getSentMessages(3, 3,MainActivity.user_id);
+
            
             todoListView.Adapter = new ArrayAdapter<string>(this, global::Android.Resource.Layout.SimpleListItem1);
             var adapter = todoListView.Adapter as ArrayAdapter<string>;
-            if(results != null)
-            adapter.Add(results.ter_nameEN);
+            if (results != null)
+            {
+                for (int k = 0; k < results.Count; k++)
+                    adapter.Add(results[k].mes_content);
+            }
         }
 
 
@@ -49,21 +54,25 @@ namespace XamarinSQLite.Android
          
             todoEditText.Text = string.Empty;
             // test 
-           
-            CScore.BCL.Semester term = new CScore.BCL.Semester();
-            term.ter_id = MainActivity.i++;
-            term.ter_nameEN = text;
+
+            CScore.BCL.Messages message = new CScore.BCL.Messages();
+           message.mes_id = MainActivity.i;
+            message.mes_content = text;
+            message.mes_sender = MainActivity.user_id;
 
 
-            await SemesterD.saveSemesterSchedule(term);
+            await CScore.DAL.MessageD.saveMessage(message);
 
-            CScore.BCL.Semester results = await SemesterD.getSemesterSchedule();
 
+            CScore.BCL.Messages results = await MessageD.getMessage(MainActivity.i++);
+
+            var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
+            var adapter = todoListView.Adapter as ArrayAdapter<string>;
 
             if (results != null)
-                text = results.ter_nameEN;
+            adapter.Add(results.mes_content);
             else
-                text = "it was null man";
+                adapter.Add("it was null man");
           //  if (user2 == null)
             //    text = "NULL";
 
@@ -71,9 +80,8 @@ namespace XamarinSQLite.Android
      
           //  await UsersD.saveUser(text);
 
-            var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
-            var adapter = todoListView.Adapter as ArrayAdapter<string>;
-         adapter.Add(text);
+           
+         
           
         }
     }

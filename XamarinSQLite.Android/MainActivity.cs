@@ -9,6 +9,7 @@ using CScore.DataLayer;
 using SQLite.Net;
 using CScore.DAL;
 using CScore.DataLayer.Tables;
+using CScore.BCL;
 
 
 namespace XamarinSQLite.Android
@@ -16,12 +17,13 @@ namespace XamarinSQLite.Android
     [Activity(Label = "XamarinSQLite.Android", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        public static int  i = 7000 ;
-
+        public static int  i = 1 ;
+        public static int user_id = 111;
+        
 
         private string GetDbPath()
         {
-            string dbname = "nenwnewwq.db";
+            string dbname = "nenwneww3q.db";
             string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             return Path.Combine(documentsPath, dbname);
         }
@@ -31,7 +33,7 @@ namespace XamarinSQLite.Android
         protected override async void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-           
+            User.use_id = 111;
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
             var login = FindViewById<Button>(Resource.Id.Login);
