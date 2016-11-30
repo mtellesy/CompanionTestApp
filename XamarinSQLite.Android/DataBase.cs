@@ -33,7 +33,7 @@ namespace XamarinSQLite.Android
 
 
 
-            List<CScore.BCL.Messages> results = await CScore.DAL.MessageD.getSentMessages(3, 3,MainActivity.user_id);
+            List<CScore.BCL.Messages> results = await CScore.DAL.MessageD.getSentMessages(110,20, MainActivity.user_id);
 
            
             todoListView.Adapter = new ArrayAdapter<string>(this, global::Android.Resource.Layout.SimpleListItem1);
