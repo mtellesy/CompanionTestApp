@@ -55,13 +55,27 @@ namespace XamarinSQLite.Android
 
             var todoEditText = FindViewById<EditText>(Resource.Id.TodoEditText);
             var text = todoEditText.Text;
+
          
             todoEditText.Text = string.Empty;
             // test 
 
+            //some shit 
+            var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
+            var adapter = todoListView.Adapter as ArrayAdapter<string>;
+            // end of shit 
             //create your object and fill the info 
-        var m =   await CScore.SAL.AuthenticatorS.sendRequest("b", null, "b");
-            text = m.ToString();
+
+            
+
+            var m = await CScore.SAL.AuthenticatorS.sendRequest("b", null, "b");
+                text = m.ToString();
+                if (m != null)
+                    adapter.Add(text);
+                else
+                    adapter.Add("it was null man");
+         
+        
 
             // call your save method here to save your object
             
@@ -69,15 +83,9 @@ namespace XamarinSQLite.Android
             //retrive your object here
             
 
-            //some shit 
-            var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
-            var adapter = todoListView.Adapter as ArrayAdapter<string>;
-            // end of shit 
+         
 
-            if (m != null)
-            adapter.Add(text);
-            else
-                adapter.Add("it was null man");
+
           //  if (user2 == null)
             //    text = "NULL";
 
