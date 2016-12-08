@@ -31,18 +31,22 @@ namespace XamarinSQLite.Android
             var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
             addButton.Click += OnAddButtonClicked;
 
-
-
+            //test
+            //What do want to be on your list
+            
             List<CScore.BCL.Messages> results = await CScore.DAL.MessageD.getSentMessages(110,20, MainActivity.user_id);
 
-           
+           // don't give a shit about this shit below 
             todoListView.Adapter = new ArrayAdapter<string>(this, global::Android.Resource.Layout.SimpleListItem1);
             var adapter = todoListView.Adapter as ArrayAdapter<string>;
+            // end of shit 
+
             if (results != null)
             {
                 for (int k = 0; k < results.Count; k++)
                     adapter.Add(results[k].mes_content);
             }
+            //end of test 
         }
 
 
@@ -55,19 +59,22 @@ namespace XamarinSQLite.Android
             todoEditText.Text = string.Empty;
             // test 
 
+            //create your object and fill the info 
             CScore.BCL.Messages message = new CScore.BCL.Messages();
            message.mes_id = MainActivity.i;
             message.mes_content = text;
             message.mes_sender = MainActivity.user_id;
 
-
+            // call your save method here to save your object
             await CScore.DAL.MessageD.saveMessage(message);
 
-
+            //retrive your object here
             CScore.BCL.Messages results = await MessageD.getMessage(MainActivity.i++);
 
+            //some shit 
             var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
             var adapter = todoListView.Adapter as ArrayAdapter<string>;
+            // end of shit 
 
             if (results != null)
             adapter.Add(results.mes_content);
