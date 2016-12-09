@@ -13,6 +13,7 @@ using CScore.DataLayer.Tables;
 
 
 
+
 namespace XamarinSQLite.Android
 {
     [Activity(Label = "XamarinSQLite.Android", Icon = "@drawable/icon")]
