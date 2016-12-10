@@ -10,7 +10,10 @@ using CScore.DataLayer;
 using SQLite.Net;
 using CScore.DAL;
 using CScore.DataLayer.Tables;
-
+using Newtonsoft.Json;
+using Newtonsoft;
+using Newtonsoft.Json.Converters;
+using CScore.SAL;
 
 
 
@@ -57,7 +60,7 @@ namespace XamarinSQLite.Android
             var todoEditText = FindViewById<EditText>(Resource.Id.TodoEditText);
             var text = todoEditText.Text;
 
-         
+
             todoEditText.Text = string.Empty;
             // test 
 
@@ -67,14 +70,18 @@ namespace XamarinSQLite.Android
             // end of shit 
             //create your object and fill the info 
 
-            
 
-            var m = await CScore.SAL.AuthenticatorS.sendRequest("b", null, "b");
-                text = m.ToString();
-                if (m != null)
+
+            String json = await CScore.SAL.AuthenticatorS.sendRequest("b", null, "GET");
+
+            CScore.SAL.RootObject k = JsonConvert.DeserializeObject<CScore.SAL.RootObject>(json);
+            text = AuthenticatorS.response[0] + json;
+            text = k.timeZoneId;
+           
+               // if (k != null)
                     adapter.Add(text);
-                else
-                    adapter.Add("it was null man");
+              //  else
+                //    adapter.Add("it was null man");
          
         
 
