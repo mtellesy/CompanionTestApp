@@ -73,13 +73,20 @@ namespace XamarinSQLite.Android
 
 
             String json = await CScore.SAL.AuthenticatorS.sendRequest("b", null, "GET");
+            try
+            {
+                CScore.SAL.RootObject k = JsonConvert.DeserializeObject<CScore.SAL.RootObject>(json);
+                
+            }catch
+            {
+                
+            }
+            text = AuthenticatorS.response + AuthenticatorS.statusCode;
+       
+            // text = k.timeZoneId;
 
-            CScore.SAL.RootObject k = JsonConvert.DeserializeObject<CScore.SAL.RootObject>(json);
-            text = AuthenticatorS.response[0] + json;
-            text = k.timeZoneId;
-           
-               // if (k != null)
-                    adapter.Add(text);
+            // if (k != null)
+            adapter.Add(text);
               //  else
                 //    adapter.Add("it was null man");
          
