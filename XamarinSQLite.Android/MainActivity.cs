@@ -23,7 +23,7 @@ namespace XamarinSQLite.Android
 
         private string GetDbPath()
         {
-            string dbname = "asafk.db";
+            string dbname = "SALDBv1.db";
             string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             return Path.Combine(documentsPath, dbname);
         }
