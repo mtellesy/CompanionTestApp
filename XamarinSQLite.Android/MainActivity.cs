@@ -39,8 +39,9 @@ namespace XamarinSQLite.Android
             var login = FindViewById<Button>(Resource.Id.Login);
             var logout = FindViewById<Button>(Resource.Id.Logout);
             var database = FindViewById<Button>(Resource.Id.Database);
+          //  var dae = FindViewById<Button>(Resource.Id.Lt);
 
-          login.Click += OnLoginButtonClicked;
+            login.Click += OnLoginButtonClicked;
           logout.Click += Logout_Click;
           database.Click += Database_Click;
 

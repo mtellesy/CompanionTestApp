@@ -74,6 +74,9 @@ namespace XamarinSQLite.Android
 			// aapt resource value: 0x7f050005
 			public const int Logout = 2131034117;
 			
+			// aapt resource value: 0x7f050006
+			public const int Lt = 2131034118;
+			
 			// aapt resource value: 0x7f050001
 			public const int TodoEditText = 2131034113;
 			
