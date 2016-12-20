@@ -72,19 +72,31 @@ namespace XamarinSQLite.Android
             // end of shit 
             //create your object and fill the info 
 
-            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.5/CStestAPIs";
+            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.4/CStestAPIs";
             //CScore.BCL.StatusWithObject<CScore.BCL.OtherUsers> x = await CScore.BCL.OtherUsers.getOtherUser(211180279);
             // StatusWithObject<String> x = await AuthenticatorS.login(2222,"SSS");
             // text = x.status.status.ToString()+x.status.message;
-            User.use_id = 211180279; User.password = "33333";
-            StatusWithObject<OtherUsers> x = await UserS.getOtherUser(21111);
+            User.use_id =211180279; User.password = "32333";
+            StatusWithObject <List<CScore.BCL.Result >> x = await ResultS.getSemesterResult();
+            //  StatusWithObject<string> x = await AuthenticatorS.sendRequest("/results/get.php", null, "GET");
             
-            text = x.statusCode.ToString()+" " + x.status.status.ToString() + " " + x.status.message;
-            
-           // text = x.statusObject + x.statusCode.to+ x.status.message;
-            // if (k != null)
+            text = x.statusCode.ToString()+" " + x.status.status.ToString() + " " + x.status.message + User.use_id ;
+         
             adapter.Add(text);
-           
+            foreach(CScore.BCL.Result y in x.statusObject)
+            {
+                adapter.Add(y.Cou_id);
+
+                foreach (MidMarkDistribution z in y.MidExams)
+                    {
+                    adapter.Add(z.Grade);
+                }
+                adapter.Add(y.Final);
+
+            }
+         
+        
+                 
             
             //  y= JsonConvert.DeserializeObject<CScore.ResponseObjects.AuthenticationObject>(x.statusObject);
        //      adapter.Add(AuthenticatorS.token);
