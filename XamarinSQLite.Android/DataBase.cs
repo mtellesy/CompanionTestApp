@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using Newtonsoft;
 using Newtonsoft.Json.Converters;
 using CScore.SAL;
+using CScore.BCL;
 
 
 
@@ -34,7 +35,8 @@ namespace XamarinSQLite.Android
             var addButton = FindViewById<Button>(Resource.Id.AddButton);
             var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
             addButton.Click += OnAddButtonClicked;
-
+            
+           
             //test
             //What do want to be on your list
             
@@ -70,47 +72,46 @@ namespace XamarinSQLite.Android
             // end of shit 
             //create your object and fill the info 
 
-
-
-            String json = await CScore.SAL.AuthenticatorS.sendRequest("b", null, "GET");
-            try
-            {
-                CScore.SAL.RootObject k = JsonConvert.DeserializeObject<CScore.SAL.RootObject>(json);
-                
-            }catch
-            {
-                
-            }
-            text = AuthenticatorS.response + AuthenticatorS.statusCode;
-       
-            // text = k.timeZoneId;
-
+            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.5/CStestAPIs";
+            //CScore.BCL.StatusWithObject<CScore.BCL.OtherUsers> x = await CScore.BCL.OtherUsers.getOtherUser(211180279);
+            // StatusWithObject<String> x = await AuthenticatorS.login(2222,"SSS");
+            // text = x.status.status.ToString()+x.status.message;
+            User.use_id = 211180279; User.password = "33333";
+            StatusWithObject<OtherUsers> x = await UserS.getOtherUser(21111);
+            
+            text = x.statusCode.ToString()+" " + x.status.status.ToString() + " " + x.status.message;
+            
+           // text = x.statusObject + x.statusCode.to+ x.status.message;
             // if (k != null)
             adapter.Add(text);
-              //  else
-                //    adapter.Add("it was null man");
-         
-        
+           
+            
+            //  y= JsonConvert.DeserializeObject<CScore.ResponseObjects.AuthenticationObject>(x.statusObject);
+       //      adapter.Add(AuthenticatorS.token);
+            //  else
+            //    adapter.Add("it was null man");
+
+
 
             // call your save method here to save your object
-            
+
 
             //retrive your object here
-            
-
-         
 
 
-          //  if (user2 == null)
+
+
+
+            //  if (user2 == null)
             //    text = "NULL";
 
             //end of test
-     
-          //  await UsersD.saveUser(text);
 
-           
-         
-          
+            //  await UsersD.saveUser(text);
+
+
+
+
         }
     }
 }
