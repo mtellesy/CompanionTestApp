@@ -72,60 +72,32 @@ namespace XamarinSQLite.Android
             // end of shit 
             //create your object and fill the info 
 
-            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.8/CStestAPIs";
+            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.2/CStestAPIs";
             //CScore.BCL.StatusWithObject<CScore.BCL.OtherUsers> x = await CScore.BCL.OtherUsers.getOtherUser(211180279);
             // StatusWithObject<String> x = await AuthenticatorS.login(2222,"SSS");
             // text = x.status.status.ToString()+x.status.message;
-            User.use_id = 211180279; User.password = "32333";
+            User.use_id = 211180287; User.password = "32333";
             adapter.Add(User.use_id);
-            List<Course> u = new List<Course>();
-           
-            Course m = new Course();
-            m.Cou_id = "MM102";
-            m.TemGro_id = 1;
-            u.Add(m);
-            StatusWithObject<Status> x;
-         foreach (Course o in u)
+            StatusWithObject < bool> st = await MajorS.getMajorStatus();
+            adapter.Add(st.statusObject.ToString());
+            adapter.Add(st.status.message);
+
+
+            StatusWithObject<List<Department>> dep = await  MajorS.getAvailableDepartments();
+            adapter.Add(dep.statusCode);
+            adapter.Add(dep.status.message);
+            if(dep.status.status == true)
+            foreach(Department d in dep.statusObject)
             {
-                x = await CScore.SAL.EnrollmentS.sendDroppedCourses(o);
-                adapter.Add(o.Cou_id);
-                text = x.statusCode.ToString() + " " + x.status.status.ToString() + " " + x.status.message + User.use_id;
-                adapter.Add(text);
+                adapter.Add(d.Dep_id);
+                adapter.Add(d.Dep_nameEN);
             }
 
-            adapter.Add("enroll");
-            StatusWithObject<Object> q =  await CScore.SAL.EnrollmentS.sendEnrolledCourses(u,"true");
-            text = q.statusCode.ToString() + " " + q.status.status.ToString() + " " + q.status.message;
-            adapter.Add(text);
-            u =   (List<Course>)q.statusObject;
-            foreach (Course o in u)
-            {
-                adapter.Add(o.Cou_id);
-                adapter.Add(o.Flag);
-           
-                
-            }
-         
-            
-
-
-
-            /* StatusWithObject<Object> x = await CScore.SAL.EnrollmentS.sendEnrolledCourses(u,"true");
-             //  StatusWithObject<string> x = await AuthenticatorS.sendRequest("/results/get.php", null, "GET");
-
-             text = x.statusCode.ToString() + " " + x.status.status.ToString() + " " + x.status.message + User.use_id;
-             adapter.Add(text);
-             if(x.statusCode == 201)
-             {
-                 List<Course> d = (List<Course>) x.statusObject;
-                 foreach(Course k in d )
-                 {
-                     adapter.Add(k.Cou_id);
-                     adapter.Add(k.Flag);
-                 }
-
-             }*/
-
+            StatusWithObject<string> maj = await MajorS.sendDepartment(2);
+            adapter.Add("major");
+           // adapter.Add(maj.statusObject);
+            adapter.Add(maj.status.status);
+            adapter.Add(maj.statusCode);
 
 
 
