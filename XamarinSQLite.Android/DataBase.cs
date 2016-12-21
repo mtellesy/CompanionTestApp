@@ -24,7 +24,7 @@ namespace XamarinSQLite.Android
     public class Database : Activity
     {
 
-       
+
         protected override async void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -35,22 +35,22 @@ namespace XamarinSQLite.Android
             var addButton = FindViewById<Button>(Resource.Id.AddButton);
             var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
             addButton.Click += OnAddButtonClicked;
-            
-           
+
+
             //test
             //What do want to be on your list
-            
-          //  List<CScore.BCL.Messages> results = await CScore.DAL.MessageD.getSentMessages(110,20, MainActivity.user_id);
 
-           // don't give a shit about this shit below 
+            //  List<CScore.BCL.Messages> results = await CScore.DAL.MessageD.getSentMessages(110,20, MainActivity.user_id);
+
+            // don't give a shit about this shit below 
             todoListView.Adapter = new ArrayAdapter<string>(this, global::Android.Resource.Layout.SimpleListItem1);
             var adapter = todoListView.Adapter as ArrayAdapter<string>;
             // end of shit 
 
-        //    if (results != null)
-          //  {
+            //    if (results != null)
+            //  {
             //    for (int k = 0; k < results.Count; k++)
-              //      adapter.Add(results[k].mes_content);
+            //      adapter.Add(results[k].mes_content);
             //}
             //end of test 
         }
@@ -72,34 +72,33 @@ namespace XamarinSQLite.Android
             // end of shit 
             //create your object and fill the info 
 
-            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.4/CStestAPIs";
+            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.3/CStestAPIs";
             //CScore.BCL.StatusWithObject<CScore.BCL.OtherUsers> x = await CScore.BCL.OtherUsers.getOtherUser(211180279);
             // StatusWithObject<String> x = await AuthenticatorS.login(2222,"SSS");
             // text = x.status.status.ToString()+x.status.message;
-            User.use_id =211180279; User.password = "32333";
-            StatusWithObject <List<CScore.BCL.Result >> x = await ResultS.getSemesterResult();
+            User.use_id = 211180287; User.password = "32333";
+            adapter.Add(User.use_id);
+            Course t = new Course();
+            t.Cou_id = "ITG212";
+            t.TemGro_id = 1;
+            StatusWithObject<Status> x = await CScore.SAL.EnrollmentS.sendDroppedCourseString("ITG212");
             //  StatusWithObject<string> x = await AuthenticatorS.sendRequest("/results/get.php", null, "GET");
-            
-            text = x.statusCode.ToString()+" " + x.status.status.ToString() + " " + x.status.message + User.use_id ;
-         
+
+            text = x.statusCode.ToString() + " " + x.status.status.ToString() + " " + x.status.message + User.use_id;
             adapter.Add(text);
-            foreach(CScore.BCL.Result y in x.statusObject)
-            {
-                adapter.Add(y.Cou_id);
+            adapter.Add(User.use_id );
+            //  adapter.Add(x.statusObject[0].ToString());
 
-                foreach (MidMarkDistribution z in y.MidExams)
-                    {
-                    adapter.Add(z.Grade);
-                }
-                adapter.Add(y.Final);
+            // adapter.Add(x.statusObject.ToString());
 
-            }
-         
-        
-                 
-            
+
+
+
+
+
+
             //  y= JsonConvert.DeserializeObject<CScore.ResponseObjects.AuthenticationObject>(x.statusObject);
-       //      adapter.Add(AuthenticatorS.token);
+            //      adapter.Add(AuthenticatorS.token);
             //  else
             //    adapter.Add("it was null man");
 
