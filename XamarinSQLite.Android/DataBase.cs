@@ -45,14 +45,7 @@ namespace XamarinSQLite.Android
             // don't give a shit about this shit below 
             todoListView.Adapter = new ArrayAdapter<string>(this, global::Android.Resource.Layout.SimpleListItem1);
             var adapter = todoListView.Adapter as ArrayAdapter<string>;
-            // end of shit 
-
-            //    if (results != null)
-            //  {
-            //    for (int k = 0; k < results.Count; k++)
-            //      adapter.Add(results[k].mes_content);
-            //}
-            //end of test 
+            
         }
 
 
@@ -72,33 +65,37 @@ namespace XamarinSQLite.Android
             // end of shit 
             //create your object and fill the info 
 
-            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.2/CStestAPIs";
+            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.3/CStestAPIs";
             //CScore.BCL.StatusWithObject<CScore.BCL.OtherUsers> x = await CScore.BCL.OtherUsers.getOtherUser(211180279);
             // StatusWithObject<String> x = await AuthenticatorS.login(2222,"SSS");
             // text = x.status.status.ToString()+x.status.message;
-            User.use_id = 211180287; User.password = "32333";
+            User.use_id = 211180279; User.password = "32333";
+            User.use_typeID = "S";
             adapter.Add(User.use_id);
-            StatusWithObject < bool> st = await MajorS.getMajorStatus();
-            adapter.Add(st.statusObject.ToString());
-            adapter.Add(st.status.message);
 
+            Announcements y = new Announcements();
+            y.Ano_content = "DDDDD";
+            y.Ano_sender = User.use_id;
+            y.Ano_time = DateTime.UtcNow.ToString();
+            y.Cou_id = "ITG100";
+            y.ReferenceID = "444";
+            y.Ter_id = 3;
 
-            StatusWithObject<List<Department>> dep = await  MajorS.getAvailableDepartments();
-            adapter.Add(dep.statusCode);
-            adapter.Add(dep.status.message);
-            if(dep.status.status == true)
-            foreach(Department d in dep.statusObject)
-            {
-                adapter.Add(d.Dep_id);
-                adapter.Add(d.Dep_nameEN);
-            }
+            StatusWithObject<Announcements> r = await CScore.BCL.Announcements.sendAnnouncement(y);
+            adapter.Add(r.status.status);
+            adapter.Add(r.status.message);
 
-            StatusWithObject<string> maj = await MajorS.sendDepartment(2);
-            adapter.Add("major");
-           // adapter.Add(maj.statusObject);
-            adapter.Add(maj.status.status);
-            adapter.Add(maj.statusCode);
-
+       
+            Announcements x = r.statusObject;
+            
+                adapter.Add("ANo");
+                adapter.Add(x.Ter_id);
+            adapter.Add(x.Ano_id);
+            adapter.Add(x.Cou_id);
+                adapter.Add(x.Ano_content);
+                adapter.Add(x.Ano_sender);
+            adapter.Add("END");
+            
 
 
 
