@@ -72,53 +72,60 @@ namespace XamarinSQLite.Android
             // end of shit 
             //create your object and fill the info 
 
-            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.3/CStestAPIs";
+            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.8/CStestAPIs";
             //CScore.BCL.StatusWithObject<CScore.BCL.OtherUsers> x = await CScore.BCL.OtherUsers.getOtherUser(211180279);
             // StatusWithObject<String> x = await AuthenticatorS.login(2222,"SSS");
             // text = x.status.status.ToString()+x.status.message;
-            User.use_id = 211180287; User.password = "32333";
+            User.use_id = 211180279; User.password = "32333";
             adapter.Add(User.use_id);
-            Course t = new Course();
-            t.Cou_id = "ITG212";
-            t.TemGro_id = 1;
-            StatusWithObject<Status> x = await CScore.SAL.EnrollmentS.sendDroppedCourseString("ITG212");
-            //  StatusWithObject<string> x = await AuthenticatorS.sendRequest("/results/get.php", null, "GET");
+            List<Course> u = new List<Course>();
+           
+            Course m = new Course();
+            m.Cou_id = "MM102";
+            m.TemGro_id = 1;
+            u.Add(m);
+            StatusWithObject<Status> x;
+         foreach (Course o in u)
+            {
+                x = await CScore.SAL.EnrollmentS.sendDroppedCourses(o);
+                adapter.Add(o.Cou_id);
+                text = x.statusCode.ToString() + " " + x.status.status.ToString() + " " + x.status.message + User.use_id;
+                adapter.Add(text);
+            }
 
-            text = x.statusCode.ToString() + " " + x.status.status.ToString() + " " + x.status.message + User.use_id;
+            adapter.Add("enroll");
+            StatusWithObject<Object> q =  await CScore.SAL.EnrollmentS.sendEnrolledCourses(u,"true");
+            text = q.statusCode.ToString() + " " + q.status.status.ToString() + " " + q.status.message;
             adapter.Add(text);
-            adapter.Add(User.use_id );
-            //  adapter.Add(x.statusObject[0].ToString());
-
-            // adapter.Add(x.statusObject.ToString());
-
-
-
-
-
-
-
-            //  y= JsonConvert.DeserializeObject<CScore.ResponseObjects.AuthenticationObject>(x.statusObject);
-            //      adapter.Add(AuthenticatorS.token);
-            //  else
-            //    adapter.Add("it was null man");
+            u =   (List<Course>)q.statusObject;
+            foreach (Course o in u)
+            {
+                adapter.Add(o.Cou_id);
+                adapter.Add(o.Flag);
+           
+                
+            }
+         
+            
 
 
 
-            // call your save method here to save your object
+            /* StatusWithObject<Object> x = await CScore.SAL.EnrollmentS.sendEnrolledCourses(u,"true");
+             //  StatusWithObject<string> x = await AuthenticatorS.sendRequest("/results/get.php", null, "GET");
 
+             text = x.statusCode.ToString() + " " + x.status.status.ToString() + " " + x.status.message + User.use_id;
+             adapter.Add(text);
+             if(x.statusCode == 201)
+             {
+                 List<Course> d = (List<Course>) x.statusObject;
+                 foreach(Course k in d )
+                 {
+                     adapter.Add(k.Cou_id);
+                     adapter.Add(k.Flag);
+                 }
 
-            //retrive your object here
+             }*/
 
-
-
-
-
-            //  if (user2 == null)
-            //    text = "NULL";
-
-            //end of test
-
-            //  await UsersD.saveUser(text);
 
 
 
