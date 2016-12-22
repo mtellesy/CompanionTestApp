@@ -73,12 +73,10 @@ namespace XamarinSQLite.Android
             User.use_typeID = "S";
             adapter.Add(User.use_id);
 
-            Announcements y = new Announcements();
-            y.Ano_content = "DDDDD";
-            y.Ano_sender = User.use_id;
-            y.Ano_time = DateTime.UtcNow.ToString();
+            Course y = new Course();
+            
             y.Cou_id = "ITG100";
-            y.ReferenceID = "444";
+            y
             y.Ter_id = 3;
             CScore.BCL.Semester.current_term = 3;
             StatusWithObject<List<Course>> r = await CScore.BCL.Enrollment.isEnrollable(y);
