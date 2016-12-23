@@ -65,7 +65,7 @@ namespace XamarinSQLite.Android
             // end of shit 
             //create your object and fill the info 
 
-            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.3/CStestAPIs";
+            CScore.SAL.AuthenticatorS.domain = "http://192.168.2.4/CStestAPIs";
             //CScore.BCL.StatusWithObject<CScore.BCL.OtherUsers> x = await CScore.BCL.OtherUsers.getOtherUser(211180279);
             // StatusWithObject<String> x = await AuthenticatorS.login(2222,"SSS");
             // text = x.status.status.ToString()+x.status.message;
@@ -73,25 +73,18 @@ namespace XamarinSQLite.Android
             User.use_typeID = "S";
             adapter.Add(User.use_id);
 
-            Course y = new Course();
-            
-            y.Cou_id = "ITG100";
-            y
-            y.Ter_id = 3;
-            CScore.BCL.Semester.current_term = 3;
-            StatusWithObject<List<Course>> r = await CScore.BCL.Enrollment.isEnrollable(y);
+            Department x = new Department();
+            x.Dep_id = 2;
+            x.Dep_nameEN = "";
+            x.DepNameAR = "";
+            StatusWithObject<String> r = await CScore.BCL.
             adapter.Add(r.status.status);
             adapter.Add(r.status.message);
-           // if (r.status.status == true && r.statusObject != null) 
-            adapter.Add(r.statusObject.Count);
-            foreach (Course x in r.statusObject)
-            {
-                adapter.Add(x.Cou_id);
-                adapter.Add(x.Cou_nameEN);
-
-
-            }
-
+          //  adapter.Add(r.statusObject);
+        //    adapter.Add(r.status.message);
+           // if (r.status.status == true && r.statusObject != null)
+      
+           
 
             //   Course x = r.statusObject[0];
 
