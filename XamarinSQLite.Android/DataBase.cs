@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Widget;
 using Android.OS;
@@ -23,6 +24,7 @@ namespace XamarinSQLite.Android
     [Activity(Label = "XamarinSQLite.Android", Icon = "@drawable/icon")]
     public class Database : Activity
     {
+        public Button addButton;
 
 
         protected override async void OnCreate(Bundle bundle)
@@ -32,7 +34,7 @@ namespace XamarinSQLite.Android
 
             // Set our view from the "database" layout resource
             SetContentView(Resource.Layout.database);
-            var addButton = FindViewById<Button>(Resource.Id.AddButton);
+             addButton = FindViewById<Button>(Resource.Id.AddButton);
             var todoListView = FindViewById<ListView>(Resource.Id.TodoListView);
             addButton.Click += OnAddButtonClicked;
 
@@ -49,7 +51,7 @@ namespace XamarinSQLite.Android
         }
 
 
-        private async void OnAddButtonClicked(object sender, EventArgs e)
+        private  async void OnAddButtonClicked(object sender, EventArgs e)
         {
 
             var todoEditText = FindViewById<EditText>(Resource.Id.TodoEditText);
@@ -65,7 +67,7 @@ namespace XamarinSQLite.Android
             // end of shit 
             //create your object and fill the info 
 
-            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.9/CStestAPIs";
+            CScore.SAL.AuthenticatorS.domain = "http://192.168.1.2/CStestAPIs";
             //CScore.BCL.StatusWithObject<CScore.BCL.OtherUsers> x = await CScore.BCL.OtherUsers.getOtherUser(211180279);
             // StatusWithObject<String> x = await AuthenticatorS.login(2222,"SSS");
             // text = x.status.status.ToString()+x.status.message;
@@ -77,11 +79,16 @@ namespace XamarinSQLite.Android
             Messages x = new Messages();
             x.Mes_content = "ddd";
             x.Mes_subject = "dd1d";
+            addButton.Enabled = false ;
+            Status r = await CScore.BCL.User.login(211180279, "33333444");
+            Status z = await CScore.BCL.User.login(211180279, "33333444");
+            Status o = await CScore.BCL.User.login(211180279, "33333444");
 
-           Status r = await CScore.BCL.User.login(211180279,"33333444");
+
+
             adapter.Add(r.status);
            adapter.Add(r.message);
-          
+            addButton.Enabled = true;
             //  adapter.Add(r.statusObject);
             //    adapter.Add(r.status.message);
             // if (r.status.status == true && r.statusObject != null)
